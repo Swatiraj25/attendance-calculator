@@ -1,551 +1,1099 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Attendance Calculator</title>
+<title>Attendly - Attendance Calculator</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#090909;
+    color:#f5f5f5;
+}
+
+/* HEADER */
+
+header{
+    background:#111111;
+    border-bottom:1px solid #292929;
+    padding:20px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#60a5fa;
+}
+
+header p{
+    color:#999;
+    margin:0;
+}
+
+/* CONTAINER */
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:25px 18px 50px;
+}
+
+/* HERO */
+
+.hero{
+    background:linear-gradient(135deg,#111827,#1e293b);
+    border:1px solid #303030;
+    padding:40px;
+    border-radius:22px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:42px;
+    margin:0 0 12px;
+}
+
+.hero h1 span{
+    color:#60a5fa;
+}
+
+.hero p{
+    color:#aaa;
+    line-height:1.6;
+}
+
+/* CARD */
+
+.card{
+    background:#111111;
+    border:1px solid #292929;
+    border-radius:18px;
+    padding:24px;
+    margin-bottom:18px;
+}
+
+.card h2{
+    margin-top:0;
+}
+
+/* STUDENT INFO */
+
+.student-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+/* INPUT */
+
+label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    color:#bbb;
+}
+
+input{
+    width:100%;
+    margin-top:7px;
+    padding:12px 13px;
+    border-radius:10px;
+    border:1px solid #363636;
+    background:#0b0b0b;
+    color:#fff;
+    font-size:14px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#60a5fa;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+/* OFF DAYS */
+
+.days{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.days label{
+    background:#1b1b1b;
+    border:1px solid #303030;
+    padding:9px 12px;
+    border-radius:9px;
+}
+
+.days input{
+    width:auto;
+    margin:0 5px 0 0;
+}
+
+/* BUTTON */
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:12px 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.add{
+    background:#2563eb;
+    color:white;
+}
+
+.calculate{
+    width:100%;
+    background:#2563eb;
+    color:white;
+    font-size:17px;
+    padding:15px;
+}
+
+.remove{
+    background:#3a1515;
+    color:#ff7777;
+    margin-top:12px;
+}
+
+/* SEARCH */
+
+.search{
+    margin:15px 0;
+}
+
+.search input{
+    font-size:15px;
+}
+
+/* SUBJECT */
+
+.subject{
+    background:#0c0c0c;
+    border:1px solid #292929;
+    padding:18px;
+    border-radius:14px;
+    margin-bottom:15px;
+}
+
+.subject-title{
+    font-size:16px;
+    font-weight:bold;
+    margin-bottom:15px;
+    color:#fff;
+}
+
+.subject-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:12px;
+}
+
+/* RESULTS */
+
+#results{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.result{
+    background:#0c0c0c;
+    border:1px solid #292929;
+    padding:20px;
+    border-radius:15px;
+}
+
+.result h3{
+    margin-top:0;
+    color:#fff;
+}
+
+.current{
+    color:#999;
+}
+
+.percentage{
+    font-size:34px;
+    font-weight:bold;
+    color:#4ade80;
+    margin:12px 0;
+}
+
+.warning{
+    color:#f87171;
+}
+
+.good{
+    color:#4ade80;
+}
+
+.info{
+    color:#aaa;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* SUMMARY */
+
+.summary{
+    background:#151515;
+    border:1px solid #292929;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    color:#ccc;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:25px;
+    color:#777;
+    border-top:1px solid #222;
+}
+
+/* MOBILE */
+
+@media(max-width:750px){
+
+    header{
+        display:block;
+        text-align:center;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #172033;
+    header p{
+        margin-top:8px;
     }
 
-    header {
-      background: #ffffff;
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
+    .hero{
+        padding:28px;
     }
 
-    header h1 {
-      margin: 0;
-      color: #2563eb;
+    .hero h1{
+        font-size:32px;
     }
 
-    header p {
-      color: #667085;
+    .student-grid,
+    .grid,
+    .subject-grid,
+    #results{
+        grid-template-columns:1fr;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 15px;
-    }
+}
 
-    .card {
-      background: white;
-      padding: 25px;
-      margin-bottom: 20px;
-      border-radius: 18px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    }
-
-    h2 {
-      margin-top: 0;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-
-    label {
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 7px;
-      border: 1px solid #d0d5dd;
-      border-radius: 10px;
-      font-size: 15px;
-    }
-
-    button {
-      border: none;
-      padding: 12px 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      background: #2563eb;
-      color: white;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    .add {
-      background: #16a34a;
-      margin-bottom: 15px;
-    }
-
-    .remove {
-      background: #dc2626;
-      margin-top: 10px;
-    }
-
-    .subject {
-      border: 1px solid #e5e7eb;
-      padding: 18px;
-      border-radius: 14px;
-      margin-bottom: 15px;
-      background: #fafcff;
-    }
-
-    .subject-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 12px;
-    }
-
-    .calculate {
-      width: 100%;
-      font-size: 17px;
-      padding: 15px;
-    }
-
-    .result {
-      padding: 18px;
-      margin-top: 15px;
-      border-radius: 12px;
-      background: #eff6ff;
-      border-left: 5px solid #2563eb;
-    }
-
-    .percentage {
-      font-size: 30px;
-      font-weight: bold;
-      color: #15803d;
-    }
-
-    .warning {
-      color: #dc2626;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #667085;
-    }
-
-    @media (max-width: 700px) {
-
-      .grid,
-      .subject-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .container {
-        margin: 15px auto;
-      }
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
+
 <header>
-  <h1>📊 Attendance Calculator</h1>
-  <p>Calculate your future subject-wise attendance</p>
+
+    <div class="logo">
+        Attend<span>ly</span>
+    </div>
+
+    <p>
+        Student Attendance Calculator
+    </p>
+
 </header>
+
 
 <div class="container">
 
-  <!-- Schedule -->
-  <div class="card">
 
-    <h2>📅 Class Schedule</h2>
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>
+        Attendance <span>Calculator</span>
+    </h1>
+
+    <p>
+        Calculate your current attendance and see
+        what your attendance can become in the future.
+    </p>
+
+</section>
+
+
+<!-- STUDENT INFORMATION -->
+
+<section class="card">
+
+    <h2>👤 Student Information</h2>
+
+    <div class="student-grid">
+
+        <label>
+            Student Name
+
+            <input
+                id="studentName"
+                type="text"
+                placeholder="Enter your name"
+            >
+
+        </label>
+
+
+        <label>
+            College Name
+
+            <input
+                id="collegeName"
+                type="text"
+                placeholder="Enter your college name"
+            >
+
+        </label>
+
+    </div>
+
+</section>
+
+
+<!-- SCHEDULE -->
+
+<section class="card">
+
+    <h2>📅 Schedule</h2>
 
     <div class="grid">
 
-      <div>
-        <label>Current Date</label>
-        <input type="date" id="currentDate">
-      </div>
+        <label>
+            Current Date
 
-      <div>
-        <label>Target Date</label>
-        <input type="date" id="targetDate">
-      </div>
+            <input
+                id="currentDate"
+                type="date"
+            >
 
-      <div>
-        <label>Classes Per Subject / Week</label>
-        <input
-          type="number"
-          id="weeklyClasses"
-          value="3"
-          min="1"
-        >
-      </div>
+        </label>
+
+
+        <label>
+            Target Date
+
+            <input
+                id="targetDate"
+                type="date"
+            >
+
+        </label>
+
+
+        <label>
+            Classes Per Subject / Week
+
+            <input
+                id="weeklyClasses"
+                type="number"
+                value="3"
+                min="1"
+            >
+
+        </label>
 
     </div>
+
 
     <br>
 
-    <p><b>Weekly Off Days:</b></p>
-
-    <label>
-      <input type="checkbox" id="friday" checked>
-      Friday
-    </label>
-
-    <label>
-      <input type="checkbox" id="saturday" checked>
-      Saturday
-    </label>
-
-  </div>
+    <p>
+        <b>Weekly Off Days</b>
+    </p>
 
 
-  <!-- Subjects -->
-  <div class="card">
+    <div class="days">
 
-    <h2>📚 My Subjects</h2>
+        <label>
+            <input
+                type="checkbox"
+                id="friday"
+                checked
+            >
+            Friday
+        </label>
 
-    <button class="add" onclick="addSubject()">
-      + Add Subject
+
+        <label>
+            <input
+                type="checkbox"
+                id="saturday"
+                checked
+            >
+            Saturday
+        </label>
+
+    </div>
+
+</section>
+
+
+<!-- SUBJECTS -->
+
+<section class="card">
+
+    <h2>📚 Subjects</h2>
+
+    <button
+        class="add"
+        onclick="addSubject()"
+    >
+        + Add Subject
     </button>
+
+
+    <div class="search">
+
+        <input
+            id="searchSubject"
+            type="text"
+            placeholder="🔎 Search subject..."
+            oninput="searchSubjects()"
+        >
+
+    </div>
+
 
     <div id="subjects"></div>
 
-  </div>
+</section>
 
 
-  <!-- Calculate -->
-  <div class="card">
+<!-- CALCULATE -->
+
+<section class="card">
 
     <button
-      class="calculate"
-      onclick="calculateAttendance()"
+        class="calculate"
+        onclick="calculateAttendance()"
     >
-      Calculate Attendance
+        📊 Calculate Attendance
     </button>
 
-  </div>
+</section>
 
 
-  <!-- Results -->
-  <div class="card">
+<!-- RESULTS -->
 
-    <h2>📈 Attendance Result</h2>
+<section class="card">
+
+    <h2>📈 Results</h2>
+
+    <div id="summary"></div>
 
     <div id="results">
-      <p>Enter your attendance and click Calculate.</p>
+
+        <p class="info">
+            Enter your attendance and click
+            "Calculate Attendance".
+        </p>
+
     </div>
 
-  </div>
+</section>
+
 
 </div>
 
 
 <footer>
-  Attendance Calculator © 2026
+
+    Attendly © 2026 • Student Attendance Calculator
+
 </footer>
 
 
 <script>
 
-  // Set today's date
-  const today = new Date();
 
-  document.getElementById("currentDate").value =
+/* DEFAULT DATE */
+
+const today = new Date();
+
+document.getElementById("currentDate").value =
     today.toISOString().split("T")[0];
 
 
-  // Default target date = 30 days later
-  const target = new Date();
+const target = new Date();
 
-  target.setDate(target.getDate() + 30);
+target.setDate(
+    target.getDate() + 30
+);
 
-  document.getElementById("targetDate").value =
+document.getElementById("targetDate").value =
     target.toISOString().split("T")[0];
 
 
-  // Add subject
-  function addSubject() {
+/* ADD SUBJECT */
+
+function addSubject(
+    name = "",
+    attended = "",
+    delivered = ""
+){
 
     const box =
-      document.getElementById("subjects");
+        document.getElementById("subjects");
+
 
     const subject =
-      document.createElement("div");
+        document.createElement("div");
 
-    subject.className = "subject";
+
+    subject.className =
+        "subject";
+
 
     subject.innerHTML = `
 
-      <div class="subject-grid">
-
-        <div>
-          <label>Subject Name</label>
-          <input
-            class="subjectName"
-            type="text"
-            placeholder="Example: Mathematics"
-          >
+        <div class="subject-title">
+            📘 Subject
         </div>
 
-        <div>
-          <label>Attended</label>
-          <input
-            class="attended"
-            type="number"
-            min="0"
-            placeholder="Example: 16"
-          >
+        <div class="subject-grid">
+
+            <label>
+                Subject Name
+
+                <input
+                    class="subjectName"
+                    type="text"
+                    placeholder="Example: Mathematics"
+                    value="${name}"
+                >
+
+            </label>
+
+
+            <label>
+                Attended
+
+                <input
+                    class="attended"
+                    type="number"
+                    min="0"
+                    placeholder="16"
+                    value="${attended}"
+                >
+
+            </label>
+
+
+            <label>
+                Delivered
+
+                <input
+                    class="delivered"
+                    type="number"
+                    min="0"
+                    placeholder="25"
+                    value="${delivered}"
+                >
+
+            </label>
+
         </div>
 
-        <div>
-          <label>Delivered</label>
-          <input
-            class="delivered"
-            type="number"
-            min="0"
-            placeholder="Example: 25"
-          >
-        </div>
 
-      </div>
+        <button
+            class="remove"
+            onclick="this.parentElement.remove()"
+        >
+            Remove Subject
+        </button>
 
-      <button
-        class="remove"
-        onclick="this.parentElement.remove()"
-      >
-        Remove
-      </button>
     `;
 
+
     box.appendChild(subject);
-  }
+
+}
 
 
-  // Count future class days
-  function getFutureClasses() {
+/* FUTURE CLASSES */
+
+function getFutureClasses(){
 
     const start =
-      new Date(
-        document.getElementById("currentDate").value
-      );
+        new Date(
+            document.getElementById(
+                "currentDate"
+            ).value
+        );
+
 
     const end =
-      new Date(
-        document.getElementById("targetDate").value
-      );
+        new Date(
+            document.getElementById(
+                "targetDate"
+            ).value
+        );
+
 
     const weekly =
-      Number(
-        document.getElementById("weeklyClasses").value
-      );
+        Number(
+            document.getElementById(
+                "weeklyClasses"
+            ).value
+        );
 
-    if (end <= start) {
-      return 0;
+
+    if(end <= start){
+        return 0;
     }
 
-    let workingDays = 0;
-
-    const date = new Date(start);
 
     const fridayOff =
-      document.getElementById("friday").checked;
+        document.getElementById(
+            "friday"
+        ).checked;
+
 
     const saturdayOff =
-      document.getElementById("saturday").checked;
+        document.getElementById(
+            "saturday"
+        ).checked;
 
 
-    while (date < end) {
+    let activeDays = 0;
 
-      const day =
-        date.getDay();
+    const date =
+        new Date(start);
 
-      if (
-        !(day === 5 && fridayOff) &&
-        !(day === 6 && saturdayOff)
-      ) {
-        workingDays++;
-      }
 
-      date.setDate(
-        date.getDate() + 1
-      );
+    while(date < end){
+
+        const day =
+            date.getDay();
+
+
+        if(
+            !(day === 5 && fridayOff) &&
+            !(day === 6 && saturdayOff)
+        ){
+
+            activeDays++;
+
+        }
+
+
+        date.setDate(
+            date.getDate() + 1
+        );
+
     }
 
 
     const activeDaysPerWeek =
-      7 -
-      (fridayOff ? 1 : 0) -
-      (saturdayOff ? 1 : 0);
+        7 -
+        (fridayOff ? 1 : 0) -
+        (saturdayOff ? 1 : 0);
 
 
     const weeks =
-      workingDays /
-      activeDaysPerWeek;
+        activeDays /
+        activeDaysPerWeek;
 
 
     return Math.floor(
-      weeks * weekly
+        weeks * weekly
     );
-  }
+
+}
 
 
-  // Calculate attendance
-  function calculateAttendance() {
+/* CALCULATE */
+
+function calculateAttendance(){
 
     const subjects =
-      document.querySelectorAll(".subject");
+        document.querySelectorAll(
+            ".subject"
+        );
+
 
     const futureClasses =
-      getFutureClasses();
+        getFutureClasses();
 
-    if (subjects.length === 0) {
 
-      document.getElementById("results").innerHTML =
-        "<p>Please add at least one subject.</p>";
+    if(subjects.length === 0){
 
-      return;
+        document.getElementById(
+            "results"
+        ).innerHTML =
+            "<p>Please add a subject.</p>";
+
+        return;
+
     }
 
 
     let html = "";
 
     let totalAttended = 0;
-    let totalClasses = 0;
+
+    let totalDelivered = 0;
 
 
-    subjects.forEach((subject) => {
+    subjects.forEach(subject => {
 
-      const name =
-        subject.querySelector(".subjectName").value ||
-        "Unnamed Subject";
-
-      const attended =
-        Number(
-          subject.querySelector(".attended").value
-        );
-
-      const delivered =
-        Number(
-          subject.querySelector(".delivered").value
-        );
+        const name =
+            subject.querySelector(
+                ".subjectName"
+            ).value ||
+            "Unnamed Subject";
 
 
-      if (delivered === 0) {
-        return;
-      }
+        const attended =
+            Number(
+                subject.querySelector(
+                    ".attended"
+                ).value
+            );
 
 
-      // Current attendance
-      const current =
-        (attended / delivered) * 100;
+        const delivered =
+            Number(
+                subject.querySelector(
+                    ".delivered"
+                ).value
+            );
 
 
-      // Assuming student attends every future class
-      const futureAttended =
-        attended + futureClasses;
-
-      const futureDelivered =
-        delivered + futureClasses;
+        if(delivered <= 0){
+            return;
+        }
 
 
-      const projected =
-        (futureAttended /
-          futureDelivered) * 100;
+        /* CURRENT */
+
+        const current =
+            (attended / delivered) * 100;
 
 
-      totalAttended += futureAttended;
-      totalClasses += futureDelivered;
+        /* FUTURE */
+
+        const futureAttended =
+            attended + futureClasses;
 
 
-      html += `
+        const futureDelivered =
+            delivered + futureClasses;
 
-        <div class="result">
 
-          <h3>${name}</h3>
+        const projected =
+            (
+                futureAttended /
+                futureDelivered
+            ) * 100;
 
-          <p>
-            Current Attendance:
-            <b>${current.toFixed(2)}%</b>
-          </p>
 
-          <p>
-            Current:
-            ${attended}/${delivered}
-          </p>
+        /* 75% CALCULATION */
 
-          <hr>
+        let classesNeeded = 0;
 
-          <p>
-            Future Classes:
-            <b>${futureClasses}</b>
-          </p>
 
-          <div class="percentage">
-            ${projected.toFixed(2)}%
-          </div>
+        if(current < 75){
 
-          <p>
-            Projected Attendance
-            if you attend all future classes.
-          </p>
+            while(
+                (
+                    (attended + classesNeeded) /
+                    (delivered + classesNeeded)
+                ) * 100 < 75
+            ){
 
-          <p>
-            Final:
-            <b>
-              ${futureAttended}/${futureDelivered}
-            </b>
-          </p>
+                classesNeeded++;
 
-        </div>
+            }
 
-      `;
+        }
+
+
+        /* MAX MISSABLE CLASSES */
+
+        let missable = 0;
+
+
+        while(
+            (
+                attended /
+                (delivered + missable + 1)
+            ) * 100 >= 75
+        ){
+
+            missable++;
+
+        }
+
+
+        totalAttended +=
+            futureAttended;
+
+
+        totalDelivered +=
+            futureDelivered;
+
+
+        html += `
+
+            <div class="result">
+
+                <h3>
+                    ${name}
+                </h3>
+
+
+                <p class="current">
+
+                    Current Attendance:
+                    <b>
+                        ${current.toFixed(2)}%
+                    </b>
+
+                    <br>
+
+                    ${attended}/${delivered}
+
+                </p>
+
+
+                <hr>
+
+
+                <p>
+                    Future Classes:
+                    <b>
+                        ${futureClasses}
+                    </b>
+                </p>
+
+
+                <div class="percentage">
+
+                    ${projected.toFixed(2)}%
+
+                </div>
+
+
+                <p class="info">
+
+                    Projected attendance if you
+                    attend all future classes.
+
+                </p>
+
+
+                ${
+                    current < 75
+
+                    ?
+
+                    `<p class="warning">
+                        🎯 You need to attend
+                        <b>${classesNeeded}</b>
+                        continuous classes to
+                        reach 75%.
+                    </p>`
+
+                    :
+
+                    `<p class="good">
+                        ✅ You are currently above
+                        the 75% target.
+                    </p>`
+                }
+
+
+                <p class="info">
+
+                    ❌ You can miss up to
+                    <b>${missable}</b>
+                    classes and stay at 75%
+                    or above.
+
+                </p>
+
+
+                <p class="info">
+
+                    Final attendance:
+                    <b>
+                        ${futureAttended}/${futureDelivered}
+                    </b>
+
+                </p>
+
+            </div>
+
+        `;
 
     });
 
 
-    // Overall
-    if (totalClasses > 0) {
+    /* OVERALL */
 
-      const overall =
-        (totalAttended /
-          totalClasses) * 100;
+    if(totalDelivered > 0){
+
+        const overall =
+            (
+                totalAttended /
+                totalDelivered
+            ) * 100;
 
 
-      html += `
+        html += `
 
-        <div class="result">
+            <div class="result">
 
-          <h2>Overall Attendance</h2>
+                <h2>
+                    📊 Overall Attendance
+                </h2>
 
-          <div class="percentage">
-            ${overall.toFixed(2)}%
-          </div>
+                <div class="percentage">
+                    ${overall.toFixed(2)}%
+                </div>
 
-        </div>
+            </div>
 
-      `;
+        `;
+
 
     }
 
 
-    document.getElementById("results").innerHTML =
-      html;
-  }
+    document.getElementById(
+        "results"
+    ).innerHTML = html;
 
 
-  // Add two subjects by default
-  addSubject();
-  addSubject();
+    /* STUDENT SUMMARY */
+
+    const student =
+        document.getElementById(
+            "studentName"
+        ).value;
+
+
+    const college =
+        document.getElementById(
+            "collegeName"
+        ).value;
+
+
+    document.getElementById(
+        "summary"
+    ).innerHTML = `
+
+        ${
+            student
+            ? `<b>Student:</b> ${student} &nbsp;`
+            : ""
+        }
+
+        ${
+            college
+            ? `<b>College:</b> ${college} &nbsp;`
+            : ""
+        }
+
+        <br>
+
+        Estimated future classes:
+        <b>${futureClasses}</b>
+
+    `;
+
+}
+
+
+/* SEARCH SUBJECT */
+
+function searchSubjects(){
+
+    const search =
+        document.getElementById(
+            "searchSubject"
+        ).value.toLowerCase();
+
+
+    const subjects =
+        document.querySelectorAll(
+            ".subject"
+        );
+
+
+    subjects.forEach(subject => {
+
+        const name =
+            subject.querySelector(
+                ".subjectName"
+            ).value.toLowerCase();
+
+
+        if(name.includes(search)){
+
+            subject.style.display =
+                "block";
+
+        }else{
+
+            subject.style.display =
+                "none";
+
+        }
+
+    });
+
+}
+
+
+/* DEFAULT SUBJECTS */
+
+addSubject(
+    "Soft Skills and Aptitude Readiness",
+    4,
+    16
+);
+
+
+addSubject(
+    "Problem-Driven Programming (PP)",
+    2,
+    12
+);
+
 
 </script>
 
